@@ -1,0 +1,67 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+#define FRAME_SIZE 3
+
+// Function to check if a page is already present in the frame
+bool isPagePresent(int page, int frame[], int frameSize) {
+    for (int i = 0; i < frameSize; ++i) {
+        if (frame[i] == page) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Function to display the contents of the frame
+void displayFrame(int frame[], int frameSize) {
+    printf("Current Frame: ");
+    for (int i = 0; i < frameSize; ++i) {
+        if (frame[i] == -1) {
+            printf("[ ] ");
+        } else {
+            printf("[%d] ", frame[i]);
+        }
+    }
+    printf("\n");
+}
+
+int main() {
+    int referenceString[] = {1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5};
+    int numPages = sizeof(referenceString) / sizeof(referenceString[0]);
+    
+    int frame[FRAME_SIZE];
+    int frameIndex = 0;
+    
+    // Initialize frame with -1 indicating empty slots
+    for (int i = 0; i < FRAME_SIZE; ++i) {
+        frame[i] = -1;
+    }
+    
+    int pageFaults = 0;
+    
+    printf("Reference String: ");
+    for (int i = 0; i < numPages; ++i) {
+        printf("%d ", referenceString[i]);
+    }
+    printf("\n\n");
+    
+    for (int i = 0; i < numPages; ++i) {
+        int currentPage = referenceString[i];
+        
+        // If page is not already present in frame, it's a page fault
+        if (!isPagePresent(currentPage, frame, FRAME_SIZE)) {
+            frame[frameIndex] = currentPage;
+            frameIndex = (frameIndex + 1) % FRAME_SIZE; // Circular increment
+            
+            pageFaults++;
+            displayFrame(frame, FRAME_SIZE);
+        } else {
+            displayFrame(frame, FRAME_SIZE);
+        }
+    }
+    
+    printf("\nTotal Page Faults: %d\n", pageFaults);
+    
+    return 0;
+}
