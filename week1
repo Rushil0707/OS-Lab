@@ -1,0 +1,121 @@
+// Linear Search 
+
+#include <stdio.h>
+
+// Function to perform linear search
+int linearSearch(int arr[], int n, int key) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key)
+            return i; // Return the index of the key if found
+    }
+    return -1; // Return -1 if key is not found
+}
+
+// Main function to test linear search
+int main() {
+    int arr[] = { 2, 3, 4, 10, 40 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int key = 10;
+
+    int result = linearSearch(arr, n, key);
+    if (result != -1)
+        printf("Element %d found at index %d\n", key, result);
+    else
+        printf("Element %d not found in array\n", key);
+
+    return 0;
+}
+
+
+
+
+// Binary Search
+
+
+#include <stdio.h>
+
+// Function to perform binary search
+int binarySearch(int arr[], int left, int right, int key) {
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        // Check if key is present at mid
+        if (arr[mid] == key)
+            return mid;
+
+        // If key greater, ignore left half
+        if (arr[mid] < key)
+            left = mid + 1;
+        // If key is smaller, ignore right half
+        else
+            right = mid - 1;
+    }
+
+    // Key not found
+    return -1;
+}
+
+// Main function to test binary search
+int main() {
+    int arr[] = { 2, 3, 4, 10, 40 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int key = 10;
+
+    int result = binarySearch(arr, 0, n - 1, key);
+    if (result != -1)
+        printf("Element %d found at index %d\n", key, result);
+    else
+        printf("Element %d not found in array\n", key);
+
+    return 0;
+}
+
+
+
+// Matrix Multiplication
+
+#include <stdio.h>
+
+#define N 3 // Size of matrices (NxN)
+
+// Function to multiply two matrices
+void multiplyMatrices(int mat1[N][N], int mat2[N][N], int result[N][N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            result[i][j] = 0;
+            for (int k = 0; k < N; k++) {
+                result[i][j] += mat1[i][k] * mat2[k][j];
+            }
+        }
+    }
+}
+
+// Function to print a matrix
+void printMatrix(int mat[N][N]) {
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            printf("%d ", mat[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+// Main function to test matrix multiplication
+int main() {
+    int mat1[N][N] = { {1, 2, 3},
+                       {4, 5, 6},
+                       {7, 8, 9} };
+
+    int mat2[N][N] = { {9, 8, 7},
+                       {6, 5, 4},
+                       {3, 2, 1} };
+
+    int result[N][N];
+
+    multiplyMatrices(mat1, mat2, result);
+
+    printf("Resultant Matrix:\n");
+    printMatrix(result);
+
+    return 0;
+}
